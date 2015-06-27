@@ -14,10 +14,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         candycrash.cpp \
-    candy.cpp
+    candy.cpp \
+    candy_control.cpp
 
 HEADERS  += candycrash.h \
-    candy.h
+    candy.h \
+    candy_control.h
 
 RESOURCES += \
-    img.qrc
+    image.qrc

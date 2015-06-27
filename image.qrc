@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/img/candy">
+        <file>img/candy.png</file>
+        <file>img/h_candy_w.png</file>
+        <file>img/normal_candy_b.png</file>
+        <file>img/normal_candy_g.png</file>
+        <file>img/normal_candy_r.png</file>
+        <file>img/normal_candy_w.png</file>
+        <file>img/normal_candy_y.png</file>
+        <file>img/v_candy_w.png</file>
+        <file>img/normal_candy_b_choose.png</file>
+        <file>img/normal_candy_g_choose.png</file>
+        <file>img/normal_candy_r_choose.png</file>
+        <file>img/normal_candy_y_choose.png</file>
+    </qresource>
+</RCC>
