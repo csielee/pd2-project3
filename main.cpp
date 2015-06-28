@@ -8,11 +8,11 @@ int main(int argc, char *argv[])
     CandyCrash *w=new CandyCrash;
 
 
-    candy_control *game=new candy_control(w,QPoint(100,100),3,3);
+    candy_control *game=new candy_control(w,QPoint(200,50),8,8);
 
 
     w->show();
-    w->resize(1000,700);
+    w->resize(1000,800);
     w->move(100,100);
 
     QTime t;

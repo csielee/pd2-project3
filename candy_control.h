@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <QMouseEvent>
-#define candy_num 10
+
 
 /*主要遊戲盤面控制*/
 class candy_control : public QWidget{
@@ -15,9 +15,11 @@ class candy_control : public QWidget{
 public:
     candy_control(QWidget *parent = 0,QPoint pos = QPoint(0,0),int a = 1,int b = 1);
     ~candy_control();
-    candy *plate[candy_num][candy_num];
+    candy *plate[Candy_Num][Candy_Num];
     int create_plate();
     int choose(int i,int j);
+    int check();
+    candy* getCandy(QWidget * parent = 0,QPoint pos = QPoint(0,0));
     int m,n,activing;
 
 protected:
