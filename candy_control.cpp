@@ -12,8 +12,10 @@ candy_control::candy_control(QWidget *parent, QPoint pos, int a, int b) : QWidge
         for(int j=0;j<n;j++)
             plate[i][j]=0;
 
-    create_plate();
+
     candy_score=new Candy_Score(parent);
+
+    create_plate();
 }
 
 candy_control::~candy_control()
@@ -124,7 +126,7 @@ int candy_control::create_plate()
                     if((num[2]+num[3])>=2)
                     {
                         //上下左右都有連線
-                        qDebug()<<"上下左右";
+
                         //清除
                         delete plate[i][j];
                         plate[i][j]=0;
@@ -163,7 +165,7 @@ int candy_control::create_plate()
                     }
                     else//左右無連線
                     {
-                        qDebug()<<"上下";
+
                         //清除
                         delete plate[i][j];
                         plate[i][j]=0;
@@ -219,7 +221,7 @@ int candy_control::create_plate()
                 {
                     if((num[2]+num[3])>=2)//左右有連線
                     {
-                        qDebug()<<"左右";
+
                         stop=1;
                         //清除
                         delete plate[i][j];
@@ -371,8 +373,9 @@ int candy_control::choose(int i, int j)
             //判斷
             if(plate[choose_i][choose_j]->check(plate[0],m,n,candy_score))
                 effect=1;
-            if(plate[i][j]->check(plate[0],m,n,candy_score))
-                effect=1;
+            if(plate[i][j]!=0)
+                if(plate[i][j]->check(plate[0],m,n,candy_score))
+                    effect=1;
             //判斷
         }
         if(effect)//如果有作用，就要補洞
@@ -436,7 +439,7 @@ int candy_control::choose(int i, int j)
                     }
                 }
 
-                while(t.elapsed()<Move_Second*0.6)
+                while(t.elapsed()<Move_Second*0.7)
                     QCoreApplication::processEvents();
 
 
@@ -483,6 +486,20 @@ int candy_control::choose(int i, int j)
         }
         activing=0;
     }
+    else
+    {
+        if(choose_i==i && choose_j==j )
+        {
+
+        }
+        else
+        {
+        choose_i=i;
+        choose_j=j;
+        plate[i][j]->bechoose();
+        haschoose++;
+        }
+    }
     haschoose++;
     haschoose=haschoose%2;
 
@@ -501,8 +518,10 @@ candy *candy_control::getCandy(QWidget *parent, QPoint pos)
 
     int r=rand()%Candy_Color_Num;
     char ch=Candy_Color.at(r).toLatin1();
+
+
     //產生普通candy
-    candy* p=new normal_candy(parent,pos,ch);
+    candy* p=new normal_candy(candy_score,parent,pos,ch);
 
     return p;
 }
@@ -540,7 +559,7 @@ void candy_control::keyPressEvent(QKeyEvent *e)
 Candy_Score::Candy_Score(QWidget *parent)
 {
     score=0;
-    combo=1;
+    combo=1.0;
     par=parent;
     scoring=0;
 }
@@ -552,13 +571,13 @@ Candy_Score::~Candy_Score()
 
 void Candy_Score::start()
 {
-    combo=1;
+    combo=1.0;
     scoring=1;
 }
 
 void Candy_Score::end()
 {
-    combo=1;
+    combo=1.0;
     scoring=0;
 }
 
@@ -580,7 +599,7 @@ int Candy_Score::add(int style)
     if(scoring)
     {
     score=score+(combo*(style*360));
-    combo++;
+    combo=combo+0.2;
     }
     return (combo*(style*360));
 }

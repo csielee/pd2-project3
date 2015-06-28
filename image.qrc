@@ -12,5 +12,39 @@
         <file>img/normal_candy_g_choose.png</file>
         <file>img/normal_candy_r_choose.png</file>
         <file>img/normal_candy_y_choose.png</file>
+        <file>img/bomb_candy_b.png</file>
+        <file>img/bomb_candy_b_choose.png</file>
+        <file>img/bomb_candy_g.png</file>
+        <file>img/bomb_candy_g_choose.png</file>
+        <file>img/bomb_candy_p.png</file>
+        <file>img/bomb_candy_p_choose.png</file>
+        <file>img/bomb_candy_r.png</file>
+        <file>img/bomb_candy_r_choose.png</file>
+        <file>img/bomb_candy_y.png</file>
+        <file>img/bomb_candy_y_choose.png</file>
+        <file>img/h_candy_b.png</file>
+        <file>img/h_candy_b_choose.png</file>
+        <file>img/h_candy_g.png</file>
+        <file>img/h_candy_g_choose.png</file>
+        <file>img/h_candy_p.png</file>
+        <file>img/h_candy_p_choose.png</file>
+        <file>img/h_candy_r.png</file>
+        <file>img/h_candy_r_choose.png</file>
+        <file>img/h_candy_y.png</file>
+        <file>img/h_candy_y_choose.png</file>
+        <file>img/star_candy.png</file>
+        <file>img/star_candy_choose.png</file>
+        <file>img/v_candy_b.png</file>
+        <file>img/v_candy_b_choose.png</file>
+        <file>img/v_candy_g.png</file>
+        <file>img/v_candy_g_choose.png</file>
+        <file>img/v_candy_p.png</file>
+        <file>img/v_candy_p_choose.png</file>
+        <file>img/v_candy_r.png</file>
+        <file>img/v_candy_r_choose.png</file>
+        <file>img/v_candy_y.png</file>
+        <file>img/v_candy_y_choose.png</file>
+        <file>img/normal_candy_p.png</file>
+        <file>img/normal_candy_p_choose.png</file>
     </qresource>
 </RCC>

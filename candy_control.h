@@ -21,7 +21,7 @@ public:
     int add(int style);
     void show_score(QPoint pos, int num);
     int score,scoring;
-    int combo;
+    double combo;
     QLabel *label;
     QWidget *par;
 };

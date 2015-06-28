@@ -8,6 +8,7 @@ CandyCrash::CandyCrash(QWidget *parent)
 
     game=new candy_control(this,QPoint(300,100),8,8);
 
+
     //連接時間事件
     game_timer=new QTimer(this);
     connect(game_timer,SIGNAL(timeout()),this,SLOT(on_Timer_Event()));
