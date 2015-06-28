@@ -8,17 +8,12 @@ int main(int argc, char *argv[])
     CandyCrash *w=new CandyCrash;
 
 
-    candy_control *game=new candy_control(w,QPoint(200,50),8,8);
+    //candy_control *game=new candy_control(w,QPoint(200,50),8,8);
 
 
     w->show();
-    w->resize(1000,800);
-    w->move(100,100);
 
-    QTime t;
-    t.start();
-    while(t.elapsed()<1000)
-        QCoreApplication::processEvents();
+
 
 
 /*    candy *c1=new candy(w),*c2=new normal_candy(w,QPoint(Candy_size,0));
@@ -28,6 +23,10 @@ int main(int argc, char *argv[])
     c3->label->setVisible(true);
     c4->label->setVisible(true);
 
+    QTime t;
+    t.start();
+    while(t.elapsed()<1000)
+        QCoreApplication::processEvents();
 
 
     *c2+c1;

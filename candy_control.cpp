@@ -1,5 +1,6 @@
 #include "candy_control.h"
 #include <QDebug>
+#include <candy.h>
 
 
 candy_control::candy_control(QWidget *parent, QPoint pos, int a, int b) : QWidget(parent),m(a),n(b)
@@ -7,7 +8,12 @@ candy_control::candy_control(QWidget *parent, QPoint pos, int a, int b) : QWidge
     move(pos);
     resize(m*Candy_size,n*Candy_size);
     activing=0;
+    for(int i=0;i<m;i++)
+        for(int j=0;j<n;j++)
+            plate[i][j]=0;
+
     create_plate();
+    candy_score=new Candy_Score(parent);
 }
 
 candy_control::~candy_control()
@@ -19,13 +25,14 @@ int candy_control::create_plate()
 {
     srand(time(NULL));
 
-    int r;
+
 
     for(int i=0;i<m;i++)
         for(int j=0;j<n;j++)
         {
-          //r=rand()%Candy_Color_Num;
-          //char ch=Candy_Color.at(r).toLatin1();
+          if(plate[i][j]!=0)
+              delete plate[i][j];
+
           plate[i][j]=getCandy(this,QPoint(i*Candy_size,j*Candy_size));
 
         }
@@ -341,6 +348,9 @@ int candy_control::choose(int i, int j)
         plate[i][j]=p;
         //交換
 
+        //開始得分
+        candy_score->start();
+
         //前置作業
         if(plate[choose_i][choose_j]->value==1 || plate[i][j]->value==1)//star
         {
@@ -359,9 +369,9 @@ int candy_control::choose(int i, int j)
         else
         {
             //判斷
-            if(plate[choose_i][choose_j]->check(plate[0],m,n))
+            if(plate[choose_i][choose_j]->check(plate[0],m,n,candy_score))
                 effect=1;
-            if(plate[i][j]->check(plate[0],m,n))
+            if(plate[i][j]->check(plate[0],m,n,candy_score))
                 effect=1;
             //判斷
         }
@@ -446,7 +456,7 @@ int candy_control::choose(int i, int j)
                         {
                             if(plate[i][j]->change==1)
                             {
-                                if(plate[i][j]->check(plate[0],m,n))
+                                if(plate[i][j]->check(plate[0],m,n,candy_score))
                                     stop=1;
                                 else
                                     plate[i][j]->change=0;
@@ -458,11 +468,11 @@ int candy_control::choose(int i, int j)
                 }
 
             }//while
+
+            //結束得分
+            candy_score->end();
         }
-
-
-        //如果沒有效果換回來
-        if(!effect)
+        else//如果沒有效果換回來
         {
             *(plate[choose_i][choose_j])+plate[i][j];
             p=plate[choose_i][choose_j];
@@ -508,4 +518,94 @@ void candy_control::mousePressEvent(QMouseEvent *e)
             choose(x,y);
     }
     qDebug()<<"Mouse";
+}
+
+void candy_control::keyPressEvent(QKeyEvent *e)
+{
+    qDebug()<<"Key"<<e->key();
+}
+
+/*
+ *
+ *
+ *
+ *
+ * 分數
+ *
+ *
+ *
+ *
+ */
+
+Candy_Score::Candy_Score(QWidget *parent)
+{
+    score=0;
+    combo=1;
+    par=parent;
+    scoring=0;
+}
+
+Candy_Score::~Candy_Score()
+{
+
+}
+
+void Candy_Score::start()
+{
+    combo=1;
+    scoring=1;
+}
+
+void Candy_Score::end()
+{
+    combo=1;
+    scoring=0;
+}
+
+void Candy_Score::restart()
+{
+    score=0;
+}
+
+int Candy_Score::operator+(const int &a)
+{
+    if(scoring)
+    score=score+a;
+    return score;
+}
+
+int Candy_Score::add(int style)
+{
+    //3,4,5
+    if(scoring)
+    {
+    score=score+(combo*(style*360));
+    combo++;
+    }
+    return (combo*(style*360));
+}
+
+void Candy_Score::show_score(QPoint pos,int num)
+{
+    if(scoring)
+    {
+    label=new QLabel(par);
+    label->resize(Candy_size*2,Candy_size);
+    label->move(pos);
+    label->setNum(num);
+    QPropertyAnimation *anim=new QPropertyAnimation(label,"pos");
+
+    anim->setDuration(100);
+    anim->setStartValue(QPoint(pos.x()-(Candy_size/2),pos.y()));
+    anim->setEndValue(pos);
+
+    anim->start();
+
+    QTime t;
+    t.start();
+    while(t.elapsed()<50)
+        QCoreApplication::processEvents();
+
+    delete label;
+    }
 }

@@ -1,4 +1,5 @@
 #include "candy.h"
+#include "candy_control.h"
 
 //candy
 
@@ -108,7 +109,7 @@ int candy::bechoose()
     return 0;
 }
 
-int candy::check(candy** p,int m,int n)
+int candy::check(candy** p, int m, int n, Candy_Score *s)
 {
     int num[4]={0};
     int count;
@@ -194,6 +195,11 @@ int candy::check(candy** p,int m,int n)
             //清除
             clear_candy(p,num,i,j,0,4,m,n);
             //清除
+            //得分
+            s->add(num[0]+num[1]+num[2]+num[3]+1);
+            //得炸彈
+            while(t.elapsed()<Move_Second/3)
+                QCoreApplication::processEvents();
         }
         else//左右無連線
         {
@@ -201,20 +207,29 @@ int candy::check(candy** p,int m,int n)
             //清除
             clear_candy(p,num,i,j,0,2,m,n);
             //清除
+
+            //得分
+            s->add(num[0]+num[1]+1);
             switch((num[0]+num[1]))
             {
             case 2:
                 //直向三個連線
+                //得分
                 break;
             case 3:
                 //直向四個連線
+                //得分
+                //得垂直
                 break;
             case 4:
             default:
                 //直向五個連線
+                //得分
+                //得星星
                 break;
             }
-
+            while(t.elapsed()<Move_Second/3)
+                QCoreApplication::processEvents();
         }
     }
     else//上下無連線
@@ -226,19 +241,29 @@ int candy::check(candy** p,int m,int n)
             //清除
             clear_candy(p,num,i,j,2,4,m,n);
             //清除
+
+            //得分
+            s->add(num[2]+num[3]+1);
             switch((num[2]+num[3]))
             {
             case 2:
                 //橫向三個連線
+                //得分
                 break;
             case 3:
                 //橫向四個連線
+                //得分
+                //得水平
                 break;
             case 4:
             default:
                 //橫向五個連線
+                //得分
+                //得星星
                 break;
             }
+            while(t.elapsed()<Move_Second/3)
+                QCoreApplication::processEvents();
         }
 
     }
@@ -453,11 +478,11 @@ int candy_color_value(QString &str)
 }
 
 
-void clear_candy(candy **p, int num[], int i, int j,int start,int end,int m,int n)
+void candy::clear_candy(candy **p, int num[], int i, int j,int start,int end,int m,int n)
 {
 
-    QTime t;
-    t.start();
+
+    t.restart();
     while(t.elapsed()<Move_Second/4)
         QCoreApplication::processEvents();
 
@@ -496,6 +521,8 @@ void clear_candy(candy **p, int num[], int i, int j,int start,int end,int m,int 
 
     }
 
-    while(t.elapsed()<Move_Second/3)
-        QCoreApplication::processEvents();
 }
+
+
+
+

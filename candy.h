@@ -14,6 +14,8 @@
 #define Move_Second 500
 #define Candy_size 80
 
+class Candy_Score;
+
 /*顏色種類*/
 QString const Candy_Color("rbgy");
 #define Candy_Color_Num 4
@@ -34,13 +36,16 @@ public:
     virtual int clear(candy** p,int m,int n);
     //virtual int check();
     virtual int bechoose();
-    int check(candy** p, int m, int n);
+    int check(candy** p, int m, int n,Candy_Score* s);
     int setOther(candy* other);
+    /*清除candy*/
+    void clear_candy(candy** p, int num[], int i, int j, int start, int end, int m, int n);
     QLabel *label;
     QPoint location;
     QPixmap img,img_choose;
     QString name;
     QString other_name;
+    QTime t;
     int size,value,change;
 };
 
@@ -88,8 +93,7 @@ public:
     int bechoose();
 };
 
-/*清除candy*/
-void clear_candy(candy** p, int num[], int i, int j, int start, int end, int m, int n);
+
 
 #endif // CANDY
 
