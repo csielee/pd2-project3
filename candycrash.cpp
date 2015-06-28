@@ -30,7 +30,7 @@ CandyCrash::CandyCrash(QWidget *parent)
     time_title->resize(150,60);
     time_title->setText("遊戲時間\ntime");
 
-    game_time.start();
+
 
     time=new QLabel(this);
     time->move(75,180);
@@ -56,6 +56,7 @@ CandyCrash::CandyCrash(QWidget *parent)
 
     //開始計時
     game_timer->start(1000);
+    game_time.start();
 
     star=0;
 }
@@ -101,7 +102,7 @@ void CandyCrash::keyPressEvent(QKeyEvent *e)
 void CandyCrash::on_Timer_Event()
 {
     update();
-    if(60000-(game_time.elapsed()%60000)<=0)
+    if(game_time.elapsed()>60000)
     {
         game_over();
     }
