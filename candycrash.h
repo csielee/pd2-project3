@@ -16,6 +16,7 @@ public:
     CandyCrash(QWidget *parent = 0);
     ~CandyCrash();
 
+
     candy_control *game;
     QLabel *score,*score_title;
     QLabel *time,*time_title;
@@ -23,6 +24,7 @@ public:
     QTime game_time;
     QTimer *game_timer;
     QPushButton *restart,*exit;
+    int star;
 
 protected:
      void paintEvent(QPaintEvent* e);
@@ -31,6 +33,10 @@ protected:
 private slots:
      void on_Timer_Event();
      void game_restart();
+     void game_over();
+
+signals:
+     void quit(int star,int score);
 
 };
 

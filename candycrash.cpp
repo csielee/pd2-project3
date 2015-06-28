@@ -39,7 +39,9 @@ CandyCrash::CandyCrash(QWidget *parent)
     time->setText(str);
 
     target=new QLabel(this);
-    target->setVisible(false);
+    target->move(75,400);
+    target->resize(150,100);
+    target->setText("過關條件：\n限時1分鐘內，達到一定分數\n一星:5W\n二星:10W\n三星:20W");
 
     //按鈕
     restart=new QPushButton("重新開始",this);
@@ -50,22 +52,44 @@ CandyCrash::CandyCrash(QWidget *parent)
     exit=new QPushButton("退出遊戲",this);
     exit->move(75,690);
     exit->resize(150,50);
-    connect(exit,SIGNAL(clicked()),this,SLOT(close()));
+    connect(exit,SIGNAL(clicked()),this,SLOT(game_over()));
 
     //開始計時
     game_timer->start(1000);
+
+    star=0;
 }
 
 CandyCrash::~CandyCrash()
 {
+    emit quit(star,game->candy_score->score);
+}
 
+void CandyCrash::game_over()
+{
+    int score=game->candy_score->score;
+    if(score>=50000)
+    {
+        star=1;
+        if(score>=100000)
+        {
+            star=2;
+            if(score>200000)
+            {
+                star=3;
+            }
+        }
+    }
+
+    emit quit(star,score);
+    close();
 }
 
 void CandyCrash::paintEvent(QPaintEvent *e)
 {
     score->setNum(game->candy_score->score);
 
-    QString str=QString("%1:%2").arg(game_time.elapsed()/60000).arg((game_time.elapsed()%60000)/1000);
+    QString str=QString("you has %1 second").arg((60000-(game_time.elapsed()%60000))/1000);
     time->setText(str);
 }
 
@@ -77,6 +101,10 @@ void CandyCrash::keyPressEvent(QKeyEvent *e)
 void CandyCrash::on_Timer_Event()
 {
     update();
+    if(60000-(game_time.elapsed()%60000)<=0)
+    {
+        game_over();
+    }
 }
 
 void CandyCrash::game_restart()
